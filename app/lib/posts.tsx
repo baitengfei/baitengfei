@@ -1,3 +1,4 @@
+// app/lib/posts.ts
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -11,8 +12,8 @@ export interface PostData {
   date?: string;
   excerpt: string;
   tags: string[];
+  image?: string; // 添加图片字段
   contentHtml?: string;
-  image?: string; // 添加图片路径
 }
 
 // 指定 Markdown 文件的目录
