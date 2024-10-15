@@ -36,7 +36,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </nav>
         </header>
 
-        <main className="pt-[150px] p-4 mt-4">{children}</main>
+        <main className="max-w-[700px] pt-[200px] p-4 mx-auto">
+          {children}
+        </main>
 
         <footer className="h-[120px] p-4 bg-gray-100 flex items-center justify-center">
           <p>Copyright &copy; baitengfei.com</p>

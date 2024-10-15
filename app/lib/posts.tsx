@@ -12,6 +12,7 @@ export interface PostData {
   excerpt: string;
   tags: string[];
   contentHtml?: string;
+  image?: string; // 添加图片路径
 }
 
 // 指定 Markdown 文件的目录
