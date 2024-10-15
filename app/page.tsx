@@ -1,7 +1,5 @@
-import Image from "next/image";
 import { getSortedPostsData } from './lib/posts';
 
-const posts = getSortedPostsData();
 
 export default function Home() {
   const posts = getSortedPostsData(); // Get all posts data
