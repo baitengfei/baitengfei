@@ -16,11 +16,7 @@ const HomePage = () => {
             一个密室逃脱类的小游戏。谜题使用了一些智能家居的元素。
             使用微信扫一扫试玩：
           </p>
-          <img
-            src="/assets/images/escaperoom.jpg"
-            alt="escaperoom_game"
-            style={{ width: '100px', height: '100px', display: 'block', margin: 'auto' }}
-          />
+         
           <p>
             另外我把代码开源了，内容包含密室逃脱游戏基本上所有的功能模块，大家可以参考设计自己的密室逃脱小游戏 --{' '}
             <a
