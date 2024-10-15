@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,17 +8,18 @@
   --foreground: #171717;
 }
 
+/*
 body {
   display: flex;
   flex-direction: column;
   margin: 0;
   min-height: 100vh;
 }
+*/
 
 
 
-
-
+/*
 header {
   background-color: #eee;
   width: 100%;
@@ -77,9 +79,9 @@ nav a:hover {
 
 
 nav li.active a {
-  font-weight: bold; /* 加粗 */
-  color: black; /* 或其他你喜欢的颜色 */
-  position: relative; /* 为伪元素提供定位基准 */
+  font-weight: bold; 
+  color: black; 
+  position: relative; 
 }
 
 nav li.active a::after {
@@ -87,9 +89,9 @@ nav li.active a::after {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -5px; /* 下方偏移量 */
-  height: 3px; /* 横线高度 */
-  background-color: #333; /* 横线颜色 */
+  bottom: -5px; 
+  height: 3px; 
+  background-color: #333; 
 }
 
 main {
@@ -108,6 +110,7 @@ article {
   border-bottom: 0.1px solid #e6e6e6;
  
 }
+
 
 h1 a {
   text-decoration: none;
@@ -283,3 +286,4 @@ footer {
   align-items: center;
   
 }
+  */
