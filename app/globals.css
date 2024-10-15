@@ -55,7 +55,7 @@ nav a {
 nav ul {
   list-style: none;
   display: flex; 
-
+  padding: 10px;
 }
 
 nav a:hover {
@@ -63,15 +63,7 @@ nav a:hover {
   color:black;
 }
 
-nav a:hover::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -5px;  
-  height: 3px;
-  background-color: #333;
-}
+
 
 .item-active::after {
   content: '';
