@@ -38,7 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
         <main className="pt-[150px] p-4 mt-4">{children}</main>
 
-        <footer className="p-4 text-center bg-gray-100">
+        <footer className="h-[120px] p-4 bg-gray-100 flex items-center justify-center">
           <p>Copyright &copy; baitengfei.com</p>
         </footer>
 
