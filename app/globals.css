@@ -8,108 +8,6 @@ html {
   font-family: sans-serif; /* 默认设置所有文本为 Inter 字体 */
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-
-
-/*
-body {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  min-height: 100vh;
-}
-*/
-
-
-
-/*
-header {
-  background-color: #eee;
-  width: 100%;
-  display: block;
-  height: auto;
-}
-
-.logo-container {
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 10px;
-}
-.logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-
-
-
-nav {
-  display: flex;
-  justify-content: center;
-}
-
-nav a {
-  text-decoration: none;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 20px;
-  margin: 0 20px;
-  color: #333;
-  position: relative;
-}
-
-nav ul {
-  list-style: none;
-  display: flex; 
-  padding: 10px;
-}
-
-nav a:hover {
-  font-weight: bold;
-  color:black;
-}
-
-
-
-.item-active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -5px;  
-  height: 3px;
-  background-color: #333;
-}
-
-
-nav li.active a {
-  font-weight: bold; 
-  color: black; 
-  position: relative; 
-}
-
-nav li.active a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -5px; 
-  height: 3px; 
-  background-color: #333; 
-}
-
-main {
-  padding-top: 30px;
-  flex: 1;
-  max-width: 700px;
-  margin: 0 auto;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-}
-
 article {
   max-width: 700px;
   margin: 0 auto;
@@ -145,13 +43,17 @@ h1 a {
 h2 {
   font-size: 20px;
   padding-top: 25px;
+  display: flex;
+  align-items: center; /* 使内容的基线对齐 */
+  line-height: 22px;
+  justify-content: flex-start;
 }
+
 h2::before {
   content: "";
   display: inline-block;
   width: 10px;
   height: 22px;
-  vertical-align: bottom;
   background-color: #3f3f3f;
   margin-right: 5px;
 }
@@ -211,6 +113,9 @@ blockquote {
   font-size: small;
   
 }
+
+/*
+
 .date {
   font-size:medium;
   font-weight: lighter;
@@ -278,19 +183,4 @@ img {
   
 }
 
-
-
-
-
-
-footer {
-  display: flex;
-  margin-top: auto;
-  background-color: #eee;
-  width:100%;  
-  height: 120px;
-  justify-content: center;
-  align-items: center;
-  
-}
-  */
+*/

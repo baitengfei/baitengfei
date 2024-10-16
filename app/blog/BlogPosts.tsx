@@ -40,11 +40,11 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
             >
               <Link
                 href={`/blog/${post.slug}`}
-                className="text-xl font-medium hover:text-blue-500 mb-2"
+                className="text-xl font-medium hover:font-bold mb-2"
               >
                 {post.title}
               </Link>
-              <p className="font-light text-gray-500 my-1 pb-3">
+              <p className="font-light text-gray-500 my-1">
                 {post.date}
               </p>
               <p className="text-gray-500 font-thin">{post.excerpt}</p>
