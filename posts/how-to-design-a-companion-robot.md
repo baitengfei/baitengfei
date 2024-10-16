@@ -1,7 +1,6 @@
 ---
 date: "2023-12-13"
 tags:
-    - star
     - robotics
 title: 当谈论陪伴机器人时，我们在想些什么
 slug: how-to-design-a-companion-robot

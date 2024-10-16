@@ -4,7 +4,6 @@ slug: ai-pin-vs-ar-glasses
 date: "2023-11-16"
 excerpt: AI Pin 不如 AirPods + iPhone 的组合
 tags:
-    - star
     - ai
 ---
 

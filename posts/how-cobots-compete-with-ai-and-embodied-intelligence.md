@@ -3,7 +3,6 @@ title: 协作机械臂的潮水要退了，裸泳的要浮现了
 slug: how-cobots-compete-with-ai-and-embodied-intelligence
 date: "2024-01-09"
 tags:
-    - star
     - robotics
 excerpt: 岁月静好的协作机械臂行业要被翻滚而过的AI和机器人浪潮卷起来了
 

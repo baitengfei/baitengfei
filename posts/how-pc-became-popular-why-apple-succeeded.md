@@ -4,7 +4,6 @@ slug: how-pc-became-popular-why-apple-succeeded
 date: "2023-09-27"
 excerpt: 为什么引领个人计算机创新的不是当时的业界巨头如 IBM、惠普等，而是一个小创业公司苹果。
 tags:
-    - star
     - tech
 ---
 

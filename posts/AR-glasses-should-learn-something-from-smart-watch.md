@@ -3,7 +3,6 @@ title: 从智能手表的视角看 AR 眼镜
 slug: AR-glasses-should-learn-something-from-smart-watch
 date: "2023-10-09"
 tags:
-    - star
     - xr
 excerpt: 人们对于智能手机已经非常熟悉乃至依赖，在这样的背景下，任何一种新的计算平台要证明自己的价值，可以说都非常困难。智能手表走过了这个历程，从最开始厂商定义的下一个计算平台，到最终逐渐收缩至运动健身这个核心场景，才终于在人们心中找准了它的定位。
 

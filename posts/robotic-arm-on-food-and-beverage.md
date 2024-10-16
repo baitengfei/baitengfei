@@ -4,7 +4,6 @@ slug: robotic-arm-on-food-and-beverage
 date: "2024-03-22"
 excerpt: 再探讨餐饮机器人的应用问题
 tags:
-    - star
     - robotics
 ---
 这是几年前我抛出的一个问题，当然现在茶颜可能没之前那么火了，但仍然是到长沙之后大部分人会想去体验的一个打卡项目。

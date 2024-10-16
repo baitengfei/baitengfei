@@ -4,7 +4,6 @@ slug: robotic-cafe
 date: "2023-10-23"
 excerpt: 为什么非要把机器人用在做咖啡上？
 tags:
-    - star
     - robotics
 ---
 
