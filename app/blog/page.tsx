@@ -11,7 +11,6 @@ interface Post {
   tags: string[]; // 添加 tags 属性以便过滤
 }
 
-const POSTS_PER_PAGE = 10; // 每页显示的文章数量
 
 export default function BlogPage() {
   const postsDirectory = path.join(process.cwd(), "posts");
