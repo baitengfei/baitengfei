@@ -30,17 +30,26 @@ export default function BlogPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Blog Posts</h1>
       <ul>
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <Link href={`/blog/${post.slug}`} className="text-blue-500">
-              {post.title}
-            </Link>
-            <p>{post.excerpt}</p>
-            <p>{post.date}</p>
-          </li>
-        ))}
+        {posts
+          .filter(post => post.slug && post.title) // 确保每个post都有slug和title
+          .map((post, index) => (
+            <li
+              key={post.slug}
+              className={`pb-4 mb-10 ${index !== posts.length - 1 ? 'border-b border-gray-200' : ''}`} // 分隔线 + 额外下边距
+            >
+              <Link 
+                href={`/blog/${post.slug}`} 
+                className="text-xl font-medium hover:text-blue-500 mb-2" // 标题悬浮变蓝，下边距
+              >
+                {post.title}
+              </Link>
+              <p className="font-light text-gray-500 my-1 pb-3"> {/* 日期上下边距 */}
+                {post.date}
+              </p>
+              <p className="text-gray-500 font-thin">{post.excerpt}</p>
+            </li>
+          ))}
       </ul>
     </div>
   );

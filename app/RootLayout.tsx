@@ -18,17 +18,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <nav className="flex justify-center pt-2 pb-4"> {/* 设置 nav 的内边距为 20px */}
             <ul className="flex list-none space-x-8">
               <li className={pathname === "/" ? "active" : ""}>
-                <Link href="/" className={`text-xl font-medium ${pathname === "/" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                <Link href="/" className={`text-2xl font-medium ${pathname === "/" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
                   首页
                 </Link>
               </li>
               <li className={pathname === "/blog" ? "active" : ""}>
-                <Link href="/blog" className={`text-xl font-medium ${pathname === "/blog" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                <Link href="/blog" className={`text-2xl font-medium ${pathname === "/blog" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
                   博客
                 </Link>
               </li>
               <li className={pathname === "/about" ? "active" : ""}>
-                <Link href="/about" className={`text-xl font-medium ${pathname === "/about" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                <Link href="/about" className={`text-2xl font-medium ${pathname === "/about" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
                   关于
                 </Link>
               </li>

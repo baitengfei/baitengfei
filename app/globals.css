@@ -3,10 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'); /* 引入 Google Fonts */
+html {
+  font-family: sans-serif; /* 默认设置所有文本为 Inter 字体 */
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
+
+
 
 /*
 body {
