@@ -11,13 +11,17 @@ html {
 /* 设置主页背景为米白色 */
 body {
   background-color: #FAF9F6; /* 更清淡的米白色 */
+  transition: background-color 0.3s ease; /* 使背景颜色平滑过渡 */
 }
 
 /* 导航栏样式示例 */
 .navbar {
   background-color: #343A40; /* 深灰色，形成对比 */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
 }
+
+
 
 article {
   max-width: 700px;

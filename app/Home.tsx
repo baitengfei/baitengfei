@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { PostData } from './lib/posts'; // 导入 PostData 类型
+import Link from 'next/link';
 
 const POSTS_PER_PAGE = 10; // 每页显示的帖子数量
 
@@ -38,27 +39,30 @@ export default function Home({ posts }: { posts: PostData[] }) {
     scrollToTop();
   };
 
+
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
       <ul className="space-y-6"> {/* 使用竖向间距 */}
         {postsToDisplay.map((post, index) => (
-          <li key={index} className="bg-white rounded-lg shadow-lg p-6 w-full"> 
-            <div className="flex">
-              <div className="w-1/3">
-                <Image 
-                  src={post.image ? post.image : defaultImage} // 如果有图片，则使用帖子中的图片，否则使用默认图片
-                  alt={post.title}
-                  className="w-50 h-50 object-cover rounded-lg" // 控制图片大小
-                  width={200}
-                  height={200}
-                />
+          <li key={index} className="bg-white rounded-lg shadow-lg p-6 w-full transition-transform duration-300 hover:shadow-xl hover:bg-gray-100 transform hover:scale-105"> {/* 添加 hover 效果 */}
+            <Link href={`/blog/${post.slug}`} className="block">
+              <div className="flex">
+                <div className="w-1/3">
+                  <Image 
+                    src={post.image ? post.image : defaultImage} // 如果有图片，则使用帖子中的图片，否则使用默认图片
+                    alt={post.title}
+                    className="w-50 h-50 object-cover rounded-lg" // 控制图片大小
+                    width={200}
+                    height={200}
+                  />
+                </div>
+                <div className="w-2/3 pl-4">
+                  <h2 className="text-xl font-normal mb-2">{post.title}</h2>
+                  <p className="text-sm text-gray-500 mb-4">{post.date}</p>
+                  <p className="text-base font-thin">{post.excerpt}</p>
+                </div>
               </div>
-              <div className="w-2/3 pl-4">
-                <h2 className="text-xl font-normal mb-2">{post.title}</h2>
-                <p className="text-sm text-gray-500 mb-4">{post.date}</p>
-                <p className="text-base font-thin">{post.excerpt}</p>
-              </div>
-            </div>
+            </Link>
           </li>
         ))}
       </ul>

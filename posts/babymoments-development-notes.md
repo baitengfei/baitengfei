@@ -1,7 +1,7 @@
 ---
 title: 宝宝时刻开发笔记
 slug: babymoments-development-notes
-excerpt: 熟悉的感觉又回来了。我有一个很棒的想法，就差一个程序员了……
+excerpt: 记录更简单，数据更直观，一眼就能知道宝宝当天喝奶、睡觉等情况
 date: "2024-03-30"
 image: "/BabyMomentsIcon.png"
 tags: 
