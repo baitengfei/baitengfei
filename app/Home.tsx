@@ -64,28 +64,32 @@ export default function Home({ posts }: { posts: PostData[] }) {
       </ul>
 
       {/* 分页控制 */}
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
-          disabled={currentPage === 1}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded disabled:opacity-50"
-        >
-          上一页
-        </button>
-        
-        {/* 显示当前页数和总页数 */}
-        <span className="text-gray-700">
-          第 {currentPage} 页 / 共 {totalPages} 页
-        </span>
-        
-        <button
-          onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded disabled:opacity-50"
-        >
-          下一页
-        </button>
-      </div>
+        <div className="flex justify-between items-center mt-4">
+            {totalPages > 1 && ( // 仅当总页数大于 1 时显示分页按钮
+            <>
+            <button
+                onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+                disabled={currentPage === 1}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded disabled:opacity-50"
+            >
+                上一页
+            </button>
+            
+            {/* 显示当前页数和总页数 */}
+            <span className="text-gray-700">
+                第 {currentPage} 页 / 共 {totalPages} 页
+            </span>
+            
+            <button
+                onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded disabled:opacity-50"
+            >
+                下一页
+            </button>
+            </>
+        )}
+        </div>
     </div>
   );
 }

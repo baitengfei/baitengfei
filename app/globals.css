@@ -8,6 +8,17 @@ html {
   font-family: sans-serif; /* 默认设置所有文本为 Inter 字体 */
 }
 
+/* 设置主页背景为米白色 */
+body {
+  background-color: #FAF9F6; /* 更清淡的米白色 */
+}
+
+/* 导航栏样式示例 */
+.navbar {
+  background-color: #343A40; /* 深灰色，形成对比 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+}
+
 article {
   max-width: 700px;
   margin: 0 auto;

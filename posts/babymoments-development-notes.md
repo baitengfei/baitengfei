@@ -3,6 +3,7 @@ title: 宝宝时刻开发笔记
 slug: babymoments-development-notes
 excerpt: 熟悉的感觉又回来了。我有一个很棒的想法，就差一个程序员了……
 date: "2024-03-30"
+image: "/BabyMomentsIcon.png"
 tags: 
     - star
     - project
