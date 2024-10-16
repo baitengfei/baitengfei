@@ -1,7 +1,7 @@
 ---
 title: 【科技考古】个人电脑是如何普及的，为什么苹果公司扮演了重要的角色
 slug: how-pc-became-popular-why-apple-succeeded
-date: "2024-07-10"
+date: "2023-09-27"
 excerpt: 为什么引领个人计算机创新的不是当时的业界巨头如 IBM、惠普等，而是一个小创业公司苹果。
 tags:
     - star

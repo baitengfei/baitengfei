@@ -1,7 +1,7 @@
 ---
 title: 不排队的茶颜悦色还好喝吗——再聊餐饮机器人困境
 slug: robotic-arm-on-food-and-beverage
-date: "2024-07-10"
+date: "2024-03-22"
 excerpt: 再探讨餐饮机器人的应用问题
 tags:
     - star

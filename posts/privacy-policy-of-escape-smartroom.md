@@ -2,9 +2,9 @@
 title: Privacy Policy
 slug: privacy-policy-of-escape-smartroom
 excerpt: Privacy Policy of Escape SmartRoom
-date: "2024-06-10"
+date: "2024-02-26"
 tags: 
-    - enlightened
+    - services
 ---
 
 Escape SmartRoom respects and protects the privacy rights of all users. We are committed to securing your privacy and explicitly inform you that Escape SmartRoom does not collect or request any personal information. This privacy policy is designed to help you understand how we handle any information related to the app, as an application that does not collect any user data.

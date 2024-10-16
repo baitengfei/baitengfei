@@ -1,7 +1,7 @@
 ---
 title: 从智能手表的视角看 AR 眼镜
 slug: AR-glasses-should-learn-something-from-smart-watch
-date: "2024-07-10"
+date: "2023-10-09"
 tags:
     - star
     - xr

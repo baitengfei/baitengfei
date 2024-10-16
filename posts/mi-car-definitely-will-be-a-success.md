@@ -1,7 +1,7 @@
 ---
 title: 气氛都烘托到这儿了，小米汽车这把肯定成了
 slug: mi-car-definitely-will-be-a-success
-date: "2024-07-10"
+date: "2023-11-21"
 excerpt: 它看起来跟当年的小米手机很像，甚至某种程度上各方面条件要更好，因为气氛已经烘托好了。
 tags:
     - star

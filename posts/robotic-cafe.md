@@ -1,7 +1,7 @@
 ---
 title: 终将到来的瑞幸 2.0 和假「情怀」的消亡
 slug: robotic-cafe
-date: "2024-07-10"
+date: "2023-10-23"
 excerpt: 为什么非要把机器人用在做咖啡上？
 tags:
     - star

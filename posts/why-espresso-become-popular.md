@@ -2,7 +2,7 @@
 title: 意式咖啡在全球的流行，是一个绝佳的商业化运作的成功案例
 slug: why-espresso-become-popular
 excerpt: 意式咖啡的流行，既有产品的优势，又有文化的加成，使得它非常适合商业化运作。
-date: "2024-06-10"
+date: "2024-05-26"
 tags: 
     - enlightened
 ---

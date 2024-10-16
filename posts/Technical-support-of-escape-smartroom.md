@@ -2,9 +2,9 @@
 title: Technical Support
 slug: Technical-support-of-escape-smartroom
 excerpt: Technical support
-date: "2024-06-10"
+date: "2024-02-27"
 tags: 
-    - enlightened   
+    - services
 ---
 
 Hi there. 

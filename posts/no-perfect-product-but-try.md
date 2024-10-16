@@ -4,7 +4,7 @@ slug: no-perfect-product-but-try
 tags: 
     - enlightened
 excerpt: 你可能经常听到这句话，可能也会偶尔把它挂在嘴边。但当你真正要做抉择的时候，你可能会选择性忽视它。
-date: "2024-06-10"
+date: "2024-01-12"
 ---
 
 你可能经常听到这句话，可能也会偶尔把它挂在嘴边。

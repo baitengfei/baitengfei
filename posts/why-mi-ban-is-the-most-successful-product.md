@@ -1,7 +1,7 @@
 ---
 title: 小米最成功的产品是什么？我认为是手环
 slug: why-mi-ban-is-the-most-successful-product
-date: "2024-07-10"
+date: "2023-10-02"
 excerpt: 我并不否认小米手机等其他小米产品的成功。我的意思是，小米手环是一个典型的通过优秀的产品定义成功将一个品类普及到大众人群的例子。
 tags:
     - star

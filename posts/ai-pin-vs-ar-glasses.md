@@ -1,7 +1,7 @@
 ---
 title: AI 如果有实体，应该是什么形态？从 Humane 的 AI Pin 说起
 slug: ai-pin-vs-ar-glasses
-date: "2024-07-10"
+date: "2023-11-16"
 excerpt: AI Pin 不如 AirPods + iPhone 的组合
 tags:
     - star

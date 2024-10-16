@@ -1,15 +1,17 @@
-// app/blog/page.tsx
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import Link from "next/link";
+import BlogPosts from "./BlogPosts"; // 引入新的客户端组件
 
 interface Post {
   slug: string;
   title: string;
   excerpt: string;
   date: string;
+  tags: string[]; // 添加 tags 属性以便过滤
 }
+
+const POSTS_PER_PAGE = 10; // 每页显示的文章数量
 
 export default function BlogPage() {
   const postsDirectory = path.join(process.cwd(), "posts");
@@ -25,32 +27,16 @@ export default function BlogPage() {
       title: data.title,
       excerpt: data.excerpt,
       date: data.date,
+      tags: data.tags || [], // 确保 tags 属性存在，默认为空数组
     };
   });
 
+  // 按日期降序排序
+  const sortedPosts = posts
+    .filter(post => !post.tags.includes("services")) // 过滤掉带有 "services" 标签的文章
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   return (
-    <div>
-      <ul>
-        {posts
-          .filter(post => post.slug && post.title) // 确保每个post都有slug和title
-          .map((post, index) => (
-            <li
-              key={post.slug}
-              className={`pb-4 mb-10 ${index !== posts.length - 1 ? 'border-b border-gray-200' : ''}`} // 分隔线 + 额外下边距
-            >
-              <Link 
-                href={`/blog/${post.slug}`} 
-                className="text-xl font-medium hover:text-blue-500 mb-2" // 标题悬浮变蓝，下边距
-              >
-                {post.title}
-              </Link>
-              <p className="font-light text-gray-500 my-1 pb-3"> {/* 日期上下边距 */}
-                {post.date}
-              </p>
-              <p className="text-gray-500 font-thin">{post.excerpt}</p>
-            </li>
-          ))}
-      </ul>
-    </div>
+    <BlogPosts posts={sortedPosts} />
   );
 }

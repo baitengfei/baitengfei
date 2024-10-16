@@ -1,7 +1,7 @@
 ---
 title: 协作机械臂的潮水要退了，裸泳的要浮现了
 slug: how-cobots-compete-with-ai-and-embodied-intelligence
-date: "2024-07-10"
+date: "2024-01-09"
 tags:
     - star
     - robotics

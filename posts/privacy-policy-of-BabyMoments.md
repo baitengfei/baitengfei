@@ -2,7 +2,7 @@
 title: Privacy Policy of BabyMoments
 slug: privacy-policy-of-BabyMoments
 excerpt: privacy policy of BabyMoments
-date: "2024-06-10"
+date: "2024-03-22"
 tags: 
     - services
 ---
