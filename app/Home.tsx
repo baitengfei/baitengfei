@@ -45,7 +45,13 @@ export default function Home({ posts }: { posts: PostData[] }) {
       <ul className="space-y-6"> {/* 使用竖向间距 */}
         {postsToDisplay.map((post, index) => (
           <li key={index} className="bg-white rounded-lg shadow-lg p-6 w-full transition-transform duration-300 hover:shadow-xl hover:bg-gray-100 transform hover:scale-105"> {/* 添加 hover 效果 */}
-            <Link href={`/blog/${post.slug}`} className="block">
+            <Link 
+              href={`/blog/${post.slug}`} 
+              className="block"
+              onClick={(e) => {
+                e.currentTarget.parentElement?.classList.remove('hover:shadow-xl', 'hover:bg-gray-100', 'hover:scale-105');
+              }}
+            >
               <div className="flex">
                 <div className="w-1/3">
                   <Image 

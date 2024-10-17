@@ -64,3 +64,9 @@ export async function getPostData(slug: string): Promise<PostData> {
     ...(matterResult.data as Omit<PostData, 'slug' | 'contentHtml'>),
   };
 }
+
+// 根据标签获取过滤后的文章数据
+export function getFilteredPostsData(tag: string): PostData[] {
+  const allPostsData = getSortedPostsData(); // 获取所有文章的数据
+  return allPostsData.filter(post => Array.isArray(post.tags) && post.tags.includes(tag)); // 根据标签筛选
+}

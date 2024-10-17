@@ -24,7 +24,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </li>
               <li className={pathname === "/blog" ? "active" : ""}>
                 <Link href="/blog" className={`text-2xl font-medium ${pathname === "/blog" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
-                  博客
+                  博客文章
+                </Link>
+              </li>
+              <li className={pathname === "/ai-applications" ? "active" : ""}>
+                <Link href="/ai-applications" className={`text-2xl font-medium ${pathname === "/ai-applications" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                  AI 应用
+                </Link>
+              </li>
+              <li className={pathname === "/my-products" ? "active" : ""}>
+                <Link href="/my-products" className={`text-2xl font-medium ${pathname === "/my-products" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                  我的产品
                 </Link>
               </li>
               <li className={pathname === "/about" ? "active" : ""}>

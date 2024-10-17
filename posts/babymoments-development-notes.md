@@ -6,7 +6,7 @@ date: "2024-03-30"
 image: "/BabyMomentsIcon.png"
 tags: 
     - star
-    - project
+    - app
 ---
 
 最近白天我妈在家帮忙带娃，每次回家我总是要重复几个问题——
