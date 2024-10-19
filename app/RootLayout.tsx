@@ -18,27 +18,27 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <nav className="flex justify-center pt-2 pb-4"> {/* 设置 nav 的内边距为 20px */}
             <ul className="flex list-none space-x-8">
               <li className={pathname === "/" ? "active" : ""}>
-                <Link href="/" className={`text-2xl font-medium ${pathname === "/" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                <Link href="/" className={`text-xl font-medium ${pathname === "/" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
                   首页
                 </Link>
               </li>
               <li className={pathname === "/blog" ? "active" : ""}>
-                <Link href="/blog" className={`text-2xl font-medium ${pathname === "/blog" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
-                  博客文章
+                <Link href="/blog" className={`text-xl font-medium ${pathname === "/blog" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                  博客
                 </Link>
               </li>
               <li className={pathname === "/ai-applications" ? "active" : ""}>
-                <Link href="/ai-applications" className={`text-2xl font-medium ${pathname === "/ai-applications" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                <Link href="/ai-applications" className={`text-xl font-medium ${pathname === "/ai-applications" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
                   AI 应用
                 </Link>
               </li>
               <li className={pathname === "/my-products" ? "active" : ""}>
-                <Link href="/my-products" className={`text-2xl font-medium ${pathname === "/my-products" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
-                  我的产品
+                <Link href="/my-products" className={`text-xl font-medium ${pathname === "/my-products" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                  产品
                 </Link>
               </li>
               <li className={pathname === "/about" ? "active" : ""}>
-                <Link href="/about" className={`text-2xl font-medium ${pathname === "/about" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
+                <Link href="/about" className={`text-xl font-medium ${pathname === "/about" ? "font-bold text-black" : "text-gray-700"} transition hover:font-bold hover:text-black`}>
                   关于
                 </Link>
               </li>
