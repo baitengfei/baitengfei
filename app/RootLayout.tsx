@@ -50,10 +50,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
 
-        <footer className="h-[120px] p-4 bg-gray-100 flex items-center justify-center">
+        <footer className="h-[120px] p-4 bg-gray-100 flex flex-col items-center justify-center">
           <p>Copyright &copy; baitengfei.com</p>
+          <p className="m-0">
+            <a href="http://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-600">
+              京ICP备2024052148号-4
+            </a>
+          </p>
         </footer>
-
         <style jsx>{`
           .active {
             position: relative;
