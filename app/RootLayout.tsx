@@ -52,11 +52,33 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
         <footer className="h-[120px] p-4 bg-gray-100 flex flex-col items-center justify-center">
           <p>Copyright &copy; baitengfei.com</p>
-          <p className="m-0">
-            <a href="http://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-600">
-              京ICP备2024052148号-4
-            </a>
-          </p>
+          <div className="m-0">
+              <div className="flex items-center space-x-2">
+                <a 
+                  href="http://beian.miit.gov.cn" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-xs text-gray-600"
+                >
+                  京ICP备2024052148号-4
+                </a>
+                <Image 
+                  src="/备案图标.png" 
+                  alt="footer image" 
+                  width={15} 
+                  height={15} 
+                  className="object-cover" 
+                />
+                <a 
+                  href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502056264" 
+                  rel="noreferrer" 
+                  target="_blank" 
+                  className="text-xs text-gray-600"
+                >
+                  京公网安备11010502056264
+                </a>
+              </div>
+            </div>
         </footer>
         <style jsx>{`
           .active {
