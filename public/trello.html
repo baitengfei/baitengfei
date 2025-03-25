@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML版Trello</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #172b4d;
+            background-color: #0079bf;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .board {
+            display: flex;
+            align-items: flex-start;
+            overflow-x: auto;
+            min-height: calc(100vh - 100px);
+            padding-bottom: 10px;
+        }
+
+        .list-wrapper {
+            flex: 0 0 auto;
+            width: 272px;
+            margin-right: 10px;
+            background-color: #ebecf0;
+            border-radius: 3px;
+            padding: 8px;
+        }
+
+        .list-wrapper.dragging {
+            opacity: 0.5;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 8px;
+            position: relative;
+        }
+
+        .list-title {
+            font-weight: bold;
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 90%;
+        }
+
+        .list-title-edit {
+            width: 90%;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            background: white;
+            padding: 5px;
+            border-radius: 3px;
+            display: none;
+        }
+
+        .list-menu {
+            cursor: pointer;
+            color: #6b778c;
+        }
+
+        .cards-container {
+            min-height: 10px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 3px;
+            box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+        }
+
+        .card-label {
+            height: 8px;
+            width: 40px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .label-red { background-color: #f87462; }
+        .label-yellow { background-color: #f5cd47; }
+        .label-green { background-color: #4bce97; }
+        .label-blue { background-color: #579dff; }
+        .label-purple { background-color: #9f8fef; }
+        .label-none { display: none; }
+
+        .card.dragging {
+            opacity: 0.5;
+        }
+
+        .add-card {
+            color: #6b778c;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .add-card:hover {
+            background-color: rgba(9, 30, 66, 0.08);
+            color: #172b4d;
+        }
+
+        .add-card span {
+            margin-left: 5px;
+        }
+
+        .add-list {
+            flex: 0 0 auto;
+            width: 272px;
+            background-color: hsla(0, 0%, 100%, 0.24);
+            border-radius: 3px;
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-list:hover {
+            background-color: hsla(0, 0%, 100%, 0.32);
+        }
+
+        .add-list-input,
+        .add-card-input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            resize: none;
+        }
+
+        .add-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .add-button {
+            background-color: #0079bf;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 12px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .add-button:hover {
+            background-color: #026aa7;
+        }
+
+        .cancel-button {
+            cursor: pointer;
+            color: #6b778c;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .dragging-over {
+            background-color: rgba(222, 235, 255, 0.7);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .board {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .list-wrapper, .add-list {
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>HTML版Trello</h1>
+    </div>
+
+    <div class="board" id="board">
+        <!-- 列表将在这里动态生成 -->
+
+        <div class="add-list" id="add-list-button">
+            <span>+ 添加另一个列表</span>
+        </div>
+
+        <div class="list-wrapper hidden" id="add-list-form">
+            <textarea class="add-list-input" placeholder="输入列表标题..."></textarea>
+            <div class="add-buttons">
+                <button class="add-button" id="add-list-submit">添加列表</button>
+                <span class="cancel-button" id="add-list-cancel">✕</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM元素
+        const board = document.getElementById('board');
+        const addListButton = document.getElementById('add-list-button');
+        const addListForm = document.getElementById('add-list-form');
+        const addListInput = addListForm.querySelector('.add-list-input');
+        const addListSubmit = document.getElementById('add-list-submit');
+        const addListCancel = document.getElementById('add-list-cancel');
+
+        // 看板数据
+        let boardData = {
+            lists: [
+                {
+                    title: '待办事项',
+                    cards: [
+                        { content: '规划新项目', color: 'red' },
+                        { content: '研究市场趋势', color: 'green' }
+                    ]
+                },
+                {
+                    title: '进行中',
+                    cards: [
+                        { content: '编写代码', color: 'blue' },
+                        { content: '设计界面', color: 'yellow' }
+                    ]
+                },
+                {
+                    title: '已完成',
+                    cards: [
+                        { content: '项目启动会议', color: 'purple' }
+                    ]
+                }
+            ]
+        };
+
+        // 渲染整个看板
+        function renderBoard() {
+            // 删除现有列表（除了添加列表按钮和表单）
+            const existingLists = document.querySelectorAll('.list-wrapper:not(#add-list-form)');
+            existingLists.forEach(list => list.remove());
+
+            // 渲染每个列表
+            boardData.lists.forEach((list, index) => {
+                const listElement = createListElement(list, index);
+                board.insertBefore(listElement, addListButton);
+            });
+        }
+
+        // 创建列表元素
+        function createListElement(list, index) {
+            const listWrapper = document.createElement('div');
+            listWrapper.className = 'list-wrapper';
+            listWrapper.setAttribute('data-list-id', index);
+            listWrapper.draggable = true;
+
+            const listHeader = document.createElement('div');
+            listHeader.className = 'list-header';
+
+            const listTitle = document.createElement('div');
+            listTitle.className = 'list-title';
+            listTitle.textContent = list.title;
+            listTitle.addEventListener('click', function() {
+                const titleEdit = listWrapper.querySelector('.list-title-edit');
+                listTitle.style.display = 'none';
+                titleEdit.style.display = 'block';
+                titleEdit.value = listTitle.textContent;
+                titleEdit.focus();
+                titleEdit.select();
+            });
+
+            const listTitleEdit = document.createElement('input');
+            listTitleEdit.className = 'list-title-edit';
+            listTitleEdit.type = 'text';
+            listTitleEdit.addEventListener('blur', function() {
+                if (listTitleEdit.value.trim() !== '') {
+                    listTitle.textContent = listTitleEdit.value.trim();
+                    boardData.lists[index].title = listTitleEdit.value.trim();
+                }
+                listTitle.style.display = 'block';
+                listTitleEdit.style.display = 'none';
+            });
+            listTitleEdit.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    listTitleEdit.blur();
+                }
+            });
+
+            const listMenu = document.createElement('div');
+            listMenu.className = 'list-menu';
+            listMenu.textContent = '•••';
+            listMenu.addEventListener('click', function() {
+                if (confirm('确定要删除此列表吗？')) {
+                    boardData.lists.splice(index, 1);
+                    renderBoard();
+                }
+            });
+
+            listHeader.appendChild(listTitle);
+            listHeader.appendChild(listTitleEdit);
+            listHeader.appendChild(listMenu);
+
+            const cardsContainer = document.createElement('div');
+            cardsContainer.className = 'cards-container';
+            cardsContainer.setAttribute('data-list-id', index);
+
+            // 渲染卡片
+            if (list.cards) {
+                list.cards.forEach((card, cardIndex) => {
+                    if (card && typeof card === 'object') {
+                        const cardElement = createCardElement(card, cardIndex);
+                        cardsContainer.appendChild(cardElement);
+                    }
+                });
+            }
+
+            const addCardButton = document.createElement('div');
+            addCardButton.className = 'add-card';
+            addCardButton.innerHTML = '<span>+ 添加一张卡片</span>';
+
+            const addCardForm = document.createElement('div');
+            addCardForm.className = 'hidden';
+
+            const addCardInput = document.createElement('textarea');
+            addCardInput.className = 'add-card-input';
+            addCardInput.placeholder = '输入卡片内容...';
+            addCardInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    addCardSubmit.click();
+                }
+            });
+
+            const addButtons = document.createElement('div');
+            addButtons.className = 'add-buttons';
+
+            const addCardSubmit = document.createElement('button');
+            addCardSubmit.className = 'add-button';
+            addCardSubmit.textContent = '添加卡片';
+            addCardSubmit.addEventListener('click', function() {
+                const cardText = addCardInput.value.trim();
+                if (cardText !== '') {
+                    const newCard = {
+                        content: cardText,
+                        color: 'none'
+                    };
+
+                    boardData.lists[index].cards.push(newCard);
+
+                    const cardElement = createCardElement(newCard, list.cards.length);
+                    cardsContainer.appendChild(cardElement);
+
+                    addCardInput.value = '';
+                    addCardForm.classList.add('hidden');
+                    addCardButton.classList.remove('hidden');
+                }
+            });
+
+            const addCardCancel = document.createElement('span');
+            addCardCancel.className = 'cancel-button';
+            addCardCancel.textContent = '✕';
+            addCardCancel.addEventListener('click', function() {
+                addCardInput.value = '';
+                addCardForm.classList.add('hidden');
+                addCardButton.classList.remove('hidden');
+            });
+
+            addButtons.appendChild(addCardSubmit);
+            addButtons.appendChild(addCardCancel);
+
+            addCardForm.appendChild(addCardInput);
+            addCardForm.appendChild(addButtons);
+
+            addCardButton.addEventListener('click', function() {
+                addCardButton.classList.add('hidden');
+                addCardForm.classList.remove('hidden');
+                addCardInput.focus();
+            });
+
+            listWrapper.appendChild(listHeader);
+            listWrapper.appendChild(cardsContainer);
+            listWrapper.appendChild(addCardButton);
+            listWrapper.appendChild(addCardForm);
+
+            // 设置列表的拖放事件
+            setupListDragEvents(listWrapper);
+
+            // 设置卡片容器的拖放目标事件
+            cardsContainer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                const draggingCard = document.querySelector('.card.dragging');
+                if (draggingCard) {
+                    cardsContainer.classList.add('dragging-over');
+
+                    // 找到放置的位置
+                    const afterElement = getDragAfterElement(cardsContainer, e.clientY);
+                    if (afterElement == null) {
+                        cardsContainer.appendChild(draggingCard);
+                    } else {
+                        cardsContainer.insertBefore(draggingCard, afterElement);
+                    }
+                }
+            });
+
+            cardsContainer.addEventListener('dragleave', function() {
+                cardsContainer.classList.remove('dragging-over');
+            });
+
+            cardsContainer.addEventListener('drop', function(e) {
+                e.preventDefault();
+                cardsContainer.classList.remove('dragging-over');
+
+                const cardElement = document.querySelector('.card.dragging');
+                if (cardElement) {
+                    const fromListId = parseInt(cardElement.getAttribute('data-list-id'));
+                    const fromCardId = parseInt(cardElement.getAttribute('data-card-id'));
+                    const toListId = parseInt(cardsContainer.getAttribute('data-list-id'));
+
+                    // 获取目标位置的索引
+                    const cards = Array.from(cardsContainer.querySelectorAll('.card'));
+                    const toCardId = cards.indexOf(cardElement);
+
+                    // 移动卡片数据
+                    const movedCard = boardData.lists[fromListId].cards[fromCardId];
+
+                    // 如果是同一个列表内移动
+                    if (fromListId === toListId) {
+                        // 从原来的位置删除
+                        boardData.lists[fromListId].cards.splice(fromCardId, 1);
+
+                        // 插入到新位置
+                        boardData.lists[toListId].cards.splice(toCardId, 0, movedCard);
+                    } else {
+                        // 从原来的列表删除
+                        boardData.lists[fromListId].cards.splice(fromCardId, 1);
+
+                        // 添加到新列表
+                        boardData.lists[toListId].cards.splice(toCardId, 0, movedCard);
+                    }
+
+                    renderBoard();
+                }
+            });
+
+            return listWrapper;
+        }
+
+        // 创建卡片元素
+        function createCardElement(card, index) {
+            if (!card || typeof card !== 'object' || !card.content) {
+                console.error('Invalid card data:', card);
+                return document.createElement('div'); // 返回空元素避免错误
+            }
+
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
+            cardElement.setAttribute('data-card-id', index);
+            cardElement.draggable = true;
+
+            // 添加颜色标签
+            const labelElement = document.createElement('div');
+            labelElement.className = `card-label label-${card.color || 'none'}`;
+            cardElement.appendChild(labelElement);
+
+            // 添加内容
+            const contentElement = document.createElement('div');
+            contentElement.textContent = card.content;
+            cardElement.appendChild(contentElement);
+
+            // 设置卡片的拖放事件
+            cardElement.addEventListener('dragstart', function(e) {
+                const listId = this.closest('.cards-container').getAttribute('data-list-id');
+                cardElement.setAttribute('data-list-id', listId);
+                cardElement.classList.add('dragging');
+
+                // 设置拖拽的数据
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    type: 'card',
+                    listId: listId,
+                    cardId: index
+                }));
+
+                // 设置拖拽时的视觉效果
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            cardElement.addEventListener('dragend', function() {
+                cardElement.classList.remove('dragging');
+            });
+
+            cardElement.addEventListener('click', function() {
+                const listId = this.closest('.cards-container').getAttribute('data-list-id');
+                const cardData = boardData.lists[listId].cards[index];
+                if (!cardData) return;
+
+                const currentContent = cardData.content || '';
+                const currentColor = cardData.color || 'none';
+
+                // 创建编辑对话框
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '1000';
+
+                const modalContent = document.createElement('div');
+                modalContent.style.backgroundColor = 'white';
+                modalContent.style.padding = '20px';
+                modalContent.style.borderRadius = '5px';
+                modalContent.style.width = '300px';
+                modalContent.style.maxWidth = '90%';
+
+                const titleElement = document.createElement('h3');
+                titleElement.textContent = '编辑卡片';
+                titleElement.style.marginBottom = '15px';
+
+                const inputElement = document.createElement('textarea');
+                inputElement.value = currentContent;
+                inputElement.style.width = '100%';
+                inputElement.style.padding = '8px';
+                inputElement.style.marginBottom = '15px';
+                inputElement.style.border = '1px solid #ddd';
+                inputElement.style.borderRadius = '3px';
+                inputElement.style.resize = 'vertical';
+                inputElement.style.minHeight = '60px';
+
+                const colorLabel = document.createElement('div');
+                colorLabel.textContent = '选择颜色标签:';
+                colorLabel.style.marginBottom = '8px';
+
+                const colorOptions = document.createElement('div');
+                colorOptions.style.display = 'flex';
+                colorOptions.style.marginBottom = '15px';
+                colorOptions.style.gap = '8px';
+
+                const colors = [
+                    { name: 'none', label: '无' },
+                    { name: 'red', label: '红色' },
+                    { name: 'yellow', label: '黄色' },
+                    { name: 'green', label: '绿色' },
+                    { name: 'blue', label: '蓝色' },
+                    { name: 'purple', label: '紫色' }
+                ];
+
+                let selectedColor = currentColor;
+
+                colors.forEach(color => {
+                    const colorOption = document.createElement('div');
+                    colorOption.style.width = '24px';
+                    colorOption.style.height = '24px';
+                    colorOption.style.borderRadius = '4px';
+                    colorOption.style.cursor = 'pointer';
+                    colorOption.style.border = '2px solid transparent';
+
+                    if (color.name === 'none') {
+                        colorOption.style.backgroundColor = '#f0f0f0';
+                        colorOption.style.position = 'relative';
+
+                        const line = document.createElement('div');
+                        line.style.position = 'absolute';
+                        line.style.width = '100%';
+                        line.style.height = '2px';
+                        line.style.backgroundColor = '#999';
+                        line.style.top = '50%';
+                        line.style.transform = 'rotate(45deg)';
+                        colorOption.appendChild(line);
+                    } else {
+                        colorOption.style.backgroundColor = getColorForName(color.name);
+                    }
+
+                    if (color.name === selectedColor) {
+                        colorOption.style.border = '2px solid black';
+                    }
+
+                    colorOption.title = color.label;
+
+                    colorOption.addEventListener('click', function() {
+                        selectedColor = color.name;
+
+                        // 重置所有边框
+                        colorOptions.querySelectorAll('div').forEach(el => {
+                            el.style.border = '2px solid transparent';
+                        });
+
+                        // 设置选中边框
+                        colorOption.style.border = '2px solid black';
+                    });
+
+                    colorOptions.appendChild(colorOption);
+                });
+
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.justifyContent = 'flex-end';
+
+                const cancelButton = document.createElement('button');
+                cancelButton.textContent = '取消';
+                cancelButton.style.marginRight = '10px';
+                cancelButton.style.padding = '6px 12px';
+                cancelButton.style.border = 'none';
+                cancelButton.style.borderRadius = '3px';
+                cancelButton.style.backgroundColor = '#ebecf0';
+                cancelButton.style.cursor = 'pointer';
+
+                const saveButton = document.createElement('button');
+                saveButton.textContent = '保存';
+                saveButton.style.padding = '6px 12px';
+                saveButton.style.border = 'none';
+                saveButton.style.borderRadius = '3px';
+                saveButton.style.backgroundColor = '#0079bf';
+                saveButton.style.color = 'white';
+                saveButton.style.cursor = 'pointer';
+
+                cancelButton.addEventListener('click', function() {
+                    document.body.removeChild(modal);
+                });
+
+                saveButton.addEventListener('click', function() {
+                    const newContent = inputElement.value.trim();
+                    if (newContent !== '') {
+                        boardData.lists[listId].cards[index].content = newContent;
+                        boardData.lists[listId].cards[index].color = selectedColor;
+                        renderBoard();
+                    }
+                    document.body.removeChild(modal);
+                });
+
+                buttonContainer.appendChild(cancelButton);
+                buttonContainer.appendChild(saveButton);
+
+                modalContent.appendChild(titleElement);
+                modalContent.appendChild(inputElement);
+                modalContent.appendChild(colorLabel);
+                modalContent.appendChild(colorOptions);
+                modalContent.appendChild(buttonContainer);
+
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                inputElement.focus();
+            });
+
+            return cardElement;
+        }
+
+        // 获取颜色值
+        function getColorForName(colorName) {
+            const colorMap = {
+                'red': '#f87462',
+                'yellow': '#f5cd47',
+                'green': '#4bce97',
+                'blue': '#579dff',
+                'purple': '#9f8fef',
+                'none': 'transparent'
+            };
+            return colorMap[colorName] || 'transparent';
+        }
+
+        // 设置列表的拖放事件
+        function setupListDragEvents(listElement) {
+            listElement.addEventListener('dragstart', function(e) {
+                listElement.classList.add('dragging');
+
+                // 设置拖拽的数据
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    type: 'list',
+                    listId: listElement.getAttribute('data-list-id')
+                }));
+
+                // 设置拖拽时的视觉效果
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            listElement.addEventListener('dragend', function() {
+                listElement.classList.remove('dragging');
+            });
+        }
+
+        // 确定卡片放置位置的辅助函数
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // 添加新列表事件
+        addListButton.addEventListener('click', function() {
+            addListButton.classList.add('hidden');
+            addListForm.classList.remove('hidden');
+            addListInput.focus();
+        });
+
+        addListSubmit.addEventListener('click', function() {
+            const listTitle = addListInput.value.trim();
+            if (listTitle !== '') {
+                boardData.lists.push({
+                    title: listTitle,
+                    cards: []
+                });
+
+                renderBoard();
+
+                addListInput.value = '';
+                addListForm.classList.add('hidden');
+                addListButton.classList.remove('hidden');
+            }
+        });
+
+        addListCancel.addEventListener('click', function() {
+            addListInput.value = '';
+            addListForm.classList.add('hidden');
+            addListButton.classList.remove('hidden');
+        });
+
+        // 设置整个看板的拖放事件（用于列表的拖放）
+        board.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            const draggingList = document.querySelector('.list-wrapper.dragging');
+            if (draggingList) {
+                // 找到当前鼠标位置最近的列表
+                const afterList = getListAfterElement(board, e.clientX);
+                if (afterList == null) {
+                    board.insertBefore(draggingList, addListButton);
+                } else {
+                    board.insertBefore(draggingList, afterList);
+                }
+            }
+        });
+
+        board.addEventListener('drop', function(e) {
+            e.preventDefault();
+
+            const dataTransfer = e.dataTransfer.getData('text/plain');
+            if (dataTransfer) {
+                try {
+                    const data = JSON.parse(dataTransfer);
+
+                    if (data.type === 'list') {
+                        const lists = Array.from(document.querySelectorAll('.list-wrapper:not(#add-list-form)'));
+                        const newOrderLists = [];
+
+                        lists.forEach((list) => {
+                            const listId = parseInt(list.getAttribute('data-list-id'));
+                            if (!isNaN(listId) && boardData.lists[listId]) {
+                                newOrderLists.push(boardData.lists[listId]);
+                            }
+                        });
+
+                        boardData.lists = newOrderLists;
+                        renderBoard();
+                    }
+                } catch (error) {
+                    console.error('Error parsing drag data:', error);
+                }
+            }
+        });
+
+        // 确定列表放置位置的辅助函数
+        function getListAfterElement(container, x) {
+            const draggableElements = [...container.querySelectorAll('.list-wrapper:not(.dragging):not(#add-list-form)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = x - box.left - box.width / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // 添加列表输入回车事件
+        addListInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addListSubmit.click();
+            }
+        });
+
+        // 初始化看板
+        renderBoard();
+    </script>
+</body>
+</html>
