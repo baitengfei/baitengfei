@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation"; // 导入 usePathname
 import Link from "next/link";
 import Image from "next/image";
+import UmamiScript from "./lib/UmamiScript";
 import "./globals.css";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -80,6 +81,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </div>
             </div>
         </footer>
+        
+        {/* Umami 数据统计 */}
+        <UmamiScript />
+        
         <style jsx>{`
           .active {
             position: relative;
