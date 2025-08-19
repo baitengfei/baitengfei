@@ -8,10 +8,12 @@ html {
   font-family: sans-serif; /* 默认设置所有文本为 Inter 字体 */
 }
 
-/* 设置主页背景为米白色 */
+/* 设置背景纹理 */
 body {
-  background-color: #FAF9F6; /* 更清淡的米白色 */
-  transition: background-color 0.3s ease; /* 使背景颜色平滑过渡 */
+  background-color: #f5f5f5;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
+  background-size: 20px 20px;
 }
 
 /* 导航栏样式示例 */
@@ -199,3 +201,7 @@ img {
 }
 
 */
+
+.text-custom-blue {
+  color: #6464B0;
+}

@@ -1,8 +1,11 @@
-// app/page.tsx
-const HomePage = () => {
+// app/ai-applications/page.tsx
+import Breadcrumb from "../components/Breadcrumb";
+
+const AIApplicationsPage = () => {
     return (
       <main>
-        <article>
+        <Breadcrumb currentPage="AI 应用" />
+        <article style={{maxWidth: '700px', margin: '0 auto', minHeight: '80vh'}}>
           <h1 className="text-xl font-medium">好用的 AI 软件，这是我使用过的一些案例</h1>
           <h2>
             AI 写作，内容生成
@@ -24,4 +27,4 @@ const HomePage = () => {
     );
   };
   
-  export default HomePage;
+  export default AIApplicationsPage;

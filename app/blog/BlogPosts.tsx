@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Breadcrumb from "../components/Breadcrumb";
 
 interface Post {
   slug: string;
@@ -26,7 +27,8 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
 
   return (
     <div>
-      <ul>
+      <Breadcrumb currentPage="博客" />
+      <ul style={{maxWidth: '700px', margin: '0 auto'}}>
         {postsToDisplay
           .filter((post) => post.slug && post.title) // 确保每个post都有slug和title
           .map((post, index) => (
@@ -53,7 +55,7 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
       </ul>
 
       {/* 分页控制 */}
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-4" style={{maxWidth: '700px', margin: '0 auto'}}>
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}

@@ -1,7 +1,14 @@
 import { getFilteredPostsData } from '../lib/posts';
-import Home from '../Home';
+import PostsList from '../components/PostsList';
+import Breadcrumb from "../components/Breadcrumb";
 
 export default async function MyProductsPage() {
   const productsPosts = getFilteredPostsData('app');
-  return <Home posts={productsPosts} />;
+  
+  return (
+    <main>
+      <Breadcrumb currentPage="我的产品" />
+      <PostsList posts={productsPosts} />
+    </main>
+  );
 }
