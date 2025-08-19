@@ -3,9 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'); /* 引入 Google Fonts */
 html {
-  font-family: sans-serif; /* 默认设置所有文本为 Inter 字体 */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* 设置背景纹理 */
