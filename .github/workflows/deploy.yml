@@ -35,4 +35,4 @@ jobs:
           git pull origin main
           npm ci
           npm run build
-          pm2 reload your-app-name || pm2 start npm --name "your-app-name" -- start
+          pm2 restart baitengfei || pm2 start npm --name "baitengfei" -- start
