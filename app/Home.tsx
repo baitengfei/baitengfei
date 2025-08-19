@@ -24,7 +24,7 @@ export default function Home() {
 
             {/* Bilibili */}
             <a href="https://space.bilibili.com/385427072" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-500 transition-colors group" title="Bilibili">
-              <svg className="w-5 h-5" viewBox="0 0 48 48">
+              <svg className="w-6 h-6" viewBox="0 0 48 48">
                 <path fill="currentColor" d="M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z"></path>
                 <rect width="2.75" height="7.075" x="30.625" y="18.463" fill="currentColor" transform="rotate(-71.567 32.001 22)"></rect>
                 <rect width="7.075" height="2.75" x="14.463" y="20.625" fill="currentColor" transform="rotate(-18.432 17.998 21.997)"></rect>
@@ -34,7 +34,7 @@ export default function Home() {
 
             {/* X (Twitter) */}
             <a href="https://x.com/tengfeibai" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black transition-colors" title="X (Twitter)">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14.095 10.316L22.286 1h-1.94L13.23 9.088L7.551 1H1l8.59 12.231L1 23h1.94l7.51-8.543L16.45 23H23l-8.905-12.684zm-2.658 3.022l-.872-1.218L3.64 2.432h2.98l5.59 7.821.869 1.219 7.265 10.166h-2.982l-5.926-8.3z"/>
               </svg>
             </a>
