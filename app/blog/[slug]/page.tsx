@@ -6,9 +6,9 @@ import html from "remark-html";
 import Breadcrumb from "../../components/Breadcrumb";
 
 interface PostProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function PostPage({ params }: PostProps) {
