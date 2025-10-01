@@ -44,6 +44,10 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
     setCurrentPage(1);
   };
 
+  // 确保当前页不超过总页数
+  const safeTotalPages = Math.max(totalPages, 1);
+  const safeCurrentPage = Math.min(currentPage, safeTotalPages);
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-1">
@@ -107,17 +111,17 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
         <div className="flex justify-between items-center">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
+            disabled={safeCurrentPage === 1}
             className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 disabled:text-gray-300 disabled:cursor-not-allowed transition-colors"
           >
             上一页
           </button>
           <span className="text-sm text-gray-500">
-            第 {currentPage} 页，共 {totalPages} 页
+            第 {safeCurrentPage} 页，共 {safeTotalPages} 页
           </span>
           <button
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, safeTotalPages))}
+            disabled={safeCurrentPage === safeTotalPages}
             className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 disabled:text-gray-300 disabled:cursor-not-allowed transition-colors"
           >
             下一页
