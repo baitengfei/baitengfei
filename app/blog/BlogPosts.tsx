@@ -1,4 +1,4 @@
-"use client"; // 指定这是客户端组件
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
