@@ -12,6 +12,7 @@ cd $PROJECT_DIR
 
 # 拉取最新代码
 echo "📥 拉取最新代码..."
+git reset --hard origin/main
 git pull origin main
 
 # 检查是否有相关变更
