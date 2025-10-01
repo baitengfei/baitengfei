@@ -14,11 +14,11 @@ export default function Breadcrumb({ currentPage, parentPage, currentPageHref }:
   };
 
   return (
-    <nav className="mb-6 py-3 px-4 bg-gray-50 rounded-lg">
-      <div className="flex items-center text-sm" style={{maxWidth: '700px', margin: '0 auto'}}>
+    <nav className="mb-8">
+      <div className="flex items-center text-base" style={{maxWidth: '700px', margin: '0 auto'}}>
         <Link 
           href="/" 
-          className="text-blue-600 hover:text-blue-800 transition-colors flex items-center"
+          className="text-gray-600 hover:text-gray-900 transition-colors flex items-center"
         >
           <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
@@ -33,7 +33,7 @@ export default function Breadcrumb({ currentPage, parentPage, currentPageHref }:
             </svg>
             <Link 
               href={parentPage.href}
-              className="text-blue-600 hover:text-blue-800 transition-colors"
+              className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               {parentPage.name}
             </Link>
@@ -46,13 +46,13 @@ export default function Breadcrumb({ currentPage, parentPage, currentPageHref }:
         {currentPageHref ? (
           <Link 
             href={currentPageHref}
-            className="text-blue-600 hover:text-blue-800 transition-colors" 
+            className="text-gray-600 hover:text-gray-900 transition-colors" 
             title={currentPage}
           >
             {truncateTitle(currentPage)}
           </Link>
         ) : (
-          <span className="text-gray-700 font-medium" title={currentPage}>
+          <span className="text-gray-900 font-medium" title={currentPage}>
             {truncateTitle(currentPage)}
           </span>
         )}

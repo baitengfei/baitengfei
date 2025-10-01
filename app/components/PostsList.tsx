@@ -56,7 +56,7 @@ export default function PostsList({ posts }: { posts: PostData[] }) {
                   <Image 
                     src={post.image ? post.image : defaultImage} // 如果有图片，则使用帖子中的图片，否则使用默认图片
                     alt={post.title}
-                    className="w-50 h-50 object-cover rounded-lg" // 控制图片大小
+                    className="w-full h-32 object-cover rounded-lg" // 控制图片大小
                     width={200}
                     height={200}
                   />
