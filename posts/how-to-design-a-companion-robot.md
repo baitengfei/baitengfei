@@ -1,6 +1,5 @@
 ---
 date: "2023-12-13"
-category: robotics
 tags:
     - robotics
 title: 当谈论陪伴机器人时，我们在想些什么

@@ -9,7 +9,6 @@ interface Post {
   excerpt: string;
   date: string;
   tags: string[];
-  category?: string;
 }
 
 
@@ -28,7 +27,6 @@ export default function BlogPage() {
       excerpt: data.excerpt,
       date: data.date,
       tags: data.tags || [],
-      category: data.category, // 添加 category
     };
   });
 

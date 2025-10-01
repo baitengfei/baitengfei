@@ -4,7 +4,6 @@ slug: babymoments-development-notes
 excerpt: 记录更简单，数据更直观，一眼就能知道宝宝当天喝奶、睡觉等情况
 date: "2024-03-30"
 image: "/BabyMomentsIcon.png"
-category: product
 tags:
     - star
     - app
