@@ -33,6 +33,8 @@ jobs:
             - 'next.config.mjs'
             - 'tailwind.config.js'
             - 'tsconfig.json'
+            - '.github/workflows/**'
+            - 'server-deploy.sh'
 
   deploy:
     needs: detect-changes
