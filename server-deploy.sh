@@ -42,9 +42,15 @@ if [ "$NEED_BUILD" = true ]; then
     echo "🔨 构建项目..."
     npm run build
     
-    # 重启应用
+    # 重启应用 (尝试多种 pm2 路径)
     echo "🔄 重启应用..."
-    pm2 restart $APP_NAME || pm2 start npm --name "$APP_NAME" -- start
+    if command -v pm2 &> /dev/null; then
+        pm2 restart $APP_NAME || pm2 start npm --name "$APP_NAME" -- start
+    elif [ -f ~/.npm-global/bin/pm2 ]; then
+        ~/.npm-global/bin/pm2 restart $APP_NAME || ~/.npm-global/bin/pm2 start npm --name "$APP_NAME" -- start
+    else
+        npx pm2 restart $APP_NAME || npx pm2 start npm --name "$APP_NAME" -- start
+    fi
     
     echo "✅ 部署完成！"
 else
@@ -53,6 +59,12 @@ fi
 
 # 显示部署状态
 echo "📊 当前应用状态:"
-pm2 status $APP_NAME
+if command -v pm2 &> /dev/null; then
+    pm2 status $APP_NAME
+elif [ -f ~/.npm-global/bin/pm2 ]; then
+    ~/.npm-global/bin/pm2 status $APP_NAME
+else
+    npx pm2 status $APP_NAME
+fi
 
 echo "🎉 部署流程完成！"

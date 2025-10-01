@@ -53,7 +53,18 @@ jobs:
     
     - name: Build
       run: npm run build
-    
+
+    - name: Upload files to server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        source: ".next,package.json,package-lock.json,next.config.mjs,public,posts,server-deploy.sh"
+        target: "/home/ecs-user/baitengfei"
+        strip_components: 0
+        overwrite: true
+
     - name: Deploy to server
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -62,17 +73,17 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd /home/ecs-user/baitengfei
-          
+
           # 确保部署脚本有执行权限
           chmod +x server-deploy.sh
-          
+
           # 执行智能部署
           ./server-deploy.sh
-          
+
           # 显示部署结果
           echo "📊 部署完成，应用状态："
-          pm2 status baitengfei
-          
+          ~/.npm-global/bin/pm2 status baitengfei || npx pm2 status baitengfei
+
           # 显示最近的日志
           echo "📝 最近的应用日志："
-          pm2 logs baitengfei --lines 10 --nostream
+          ~/.npm-global/bin/pm2 logs baitengfei --lines 10 --nostream || npx pm2 logs baitengfei --lines 10 --nostream
