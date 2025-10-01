@@ -8,7 +8,8 @@ interface Post {
   title: string;
   excerpt: string;
   date: string;
-  tags: string[]; // 添加 tags 属性以便过滤
+  tags: string[];
+  category?: string;
 }
 
 
@@ -26,7 +27,8 @@ export default function BlogPage() {
       title: data.title,
       excerpt: data.excerpt,
       date: data.date,
-      tags: data.tags || [], // 确保 tags 属性存在，默认为空数组
+      tags: data.tags || [],
+      category: data.category, // 添加 category
     };
   });
 

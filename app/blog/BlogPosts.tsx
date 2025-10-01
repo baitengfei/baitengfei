@@ -10,6 +10,7 @@ interface Post {
   excerpt: string;
   date: string;
   tags: string[];
+  category?: string;
 }
 
 interface BlogPostsProps {
@@ -20,17 +21,27 @@ const POSTS_PER_PAGE = 10; // 每页显示10篇文章
 
 export default function BlogPosts({ posts }: BlogPostsProps) {
   const [currentPage, setCurrentPage] = useState(1); // 当前页码
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // 选中的分类
   const [selectedTag, setSelectedTag] = useState<string | null>(null); // 选中的标签
-  
-  // 获取所有唯一的标签，过滤掉 star 和 app
-  const allTags = Array.from(new Set(posts.flatMap(post => post.tags)))
+
+  // 获取所有唯一的分类
+  const allCategories = Array.from(new Set(posts.map(post => post.category).filter(Boolean)))
+    .sort();
+
+  // 先根据分类过滤
+  const categoryFilteredPosts = selectedCategory
+    ? posts.filter(post => post.category === selectedCategory)
+    : posts;
+
+  // 获取当前分类下的所有标签，过滤掉 star 和 app
+  const allTags = Array.from(new Set(categoryFilteredPosts.flatMap(post => post.tags)))
     .filter(tag => tag !== 'star' && tag !== 'app')
     .sort();
-  
-  // 根据选中的标签过滤文章
-  const filteredPosts = selectedTag 
-    ? posts.filter(post => post.tags.includes(selectedTag))
-    : posts;
+
+  // 再根据标签过滤
+  const filteredPosts = selectedTag
+    ? categoryFilteredPosts.filter(post => post.tags.includes(selectedTag))
+    : categoryFilteredPosts;
   
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE); // 总页数
 
@@ -38,6 +49,13 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const postsToDisplay = filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
   
+  // 当分类改变时重置标签和页码
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    setSelectedTag(null); // 重置标签选择
+    setCurrentPage(1);
+  };
+
   // 当标签改变时重置到第一页
   const handleTagChange = (tag: string | null) => {
     setSelectedTag(tag);
@@ -52,7 +70,42 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
     <div className="min-h-screen flex flex-col">
       <div className="flex-1">
         <Breadcrumb currentPage="博客" />
-        
+
+        {/* 分类过滤器 - 导航样式 */}
+        <div style={{maxWidth: '700px', margin: '0 auto', marginBottom: '1.5rem'}}>
+          <nav className="flex gap-6 border-b border-gray-200">
+            <button
+              onClick={() => handleCategoryChange(null)}
+              className={`pb-2 text-sm transition-colors relative ${
+                selectedCategory === null
+                  ? 'text-gray-900 font-medium'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              全部
+              {selectedCategory === null && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"></span>
+              )}
+            </button>
+            {allCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                className={`pb-2 text-sm transition-colors relative ${
+                  selectedCategory === category
+                    ? 'text-gray-900 font-medium'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {category}
+                {selectedCategory === category && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"></span>
+                )}
+              </button>
+            ))}
+          </nav>
+        </div>
+
         {/* 标签过滤器 */}
         <div style={{maxWidth: '700px', margin: '0 auto', marginBottom: '2rem'}}>
           <div className="flex flex-wrap gap-1">
