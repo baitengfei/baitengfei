@@ -83,7 +83,7 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
         <ul style={{maxWidth: '700px', margin: '0 auto'}} className="space-y-8">
           {postsToDisplay
             .filter((post) => post.slug && post.title) // 确保每个post都有slug和title
-            .map((post, index) => (
+            .map((post) => (
               <li key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
