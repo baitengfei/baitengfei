@@ -62,14 +62,25 @@ pm2 reload your-app-name  # 改为: pm2 reload baitengfei
 
 ## 日常使用
 
-### 方法一：使用部署脚本（推荐）
+### 方法一：快速发布文章（推荐）
 
 ```bash
-# 添加新文章到 posts/ 目录后，运行：
+# 使用快速发布脚本
+./publish-post.sh "文章标题" "文章内容"
+
+# 示例
+./publish-post.sh "我的新文章" "这是文章的内容，支持多行文本..."
+```
+
+### 方法二：手动添加文章后部署
+
+```bash
+# 1. 在 posts/ 目录创建新的 .md 文件
+# 2. 运行智能部署脚本
 ./deploy.sh
 ```
 
-### 方法二：手动 Git 操作
+### 方法三：手动 Git 操作
 
 ```bash
 # 1. 添加新文章
@@ -83,12 +94,26 @@ git push origin main
 # 3. 等待自动部署完成（约2-5分钟）
 ```
 
-### 方法三：直接在 GitHub 网页编辑
+### 方法四：直接在 GitHub 网页编辑
 
 1. 在 GitHub 仓库中进入 `posts/` 目录
 2. 点击 "Add file" > "Create new file"
 3. 创建新的 `.md` 文件
 4. 提交更改，自动触发部署
+
+## 智能部署特性
+
+### 变更检测
+系统会自动检测以下类型的变更：
+- **文章变更** (`posts/` 目录)：需要重新构建
+- **代码变更** (`app/`, `components/`, `lib/` 目录)：需要重新构建
+- **配置变更** (`package.json`, `next.config.mjs` 等)：需要重新构建
+- **其他变更**：跳过构建
+
+### 部署优化
+- **增量部署**：只对相关变更进行构建
+- **依赖检测**：只有 `package.json` 变更时才重新安装依赖
+- **状态反馈**：提供详细的部署状态信息
 
 ## 部署流程说明
 
@@ -158,7 +183,10 @@ sudo firewall-cmd --reload
 ### 3. 回滚机制
 
 ```bash
-# 在服务器上回滚到上一个版本
+# 使用回滚脚本（推荐）
+./rollback.sh
+
+# 或者手动回滚
 git log --oneline -10  # 查看最近提交
 git reset --hard <commit-hash>
 npm run build
@@ -213,6 +241,43 @@ npm run build
 pm2 restart baitengfei
 ```
 
+## 使用示例
+
+### 发布新文章
+```bash
+# 方法1: 使用快速发布脚本
+./publish-post.sh "我的新文章" "这是文章的内容..."
+
+# 方法2: 手动创建文件后部署
+echo "---" > posts/my-new-post.md
+echo "title: 我的新文章" >> posts/my-new-post.md
+echo "date: 2024-01-01" >> posts/my-new-post.md
+echo "excerpt: 文章摘要" >> posts/my-new-post.md
+echo "tags: []" >> posts/my-new-post.md
+echo "---" >> posts/my-new-post.md
+echo "" >> posts/my-new-post.md
+echo "文章内容..." >> posts/my-new-post.md
+./deploy.sh
+```
+
+### 更新代码
+```bash
+# 修改代码后
+git add .
+git commit -m "更新功能"
+git push origin main
+# 自动触发部署
+```
+
+### 紧急回滚
+```bash
+# 查看最近的提交
+git log --oneline -5
+
+# 回滚到指定版本
+./rollback.sh abc1234
+```
+
 ---
 
-**注意**: 首次配置完成后，每次发布文章只需运行 `./deploy.sh` 即可自动完成部署。
+**注意**: 首次配置完成后，每次发布文章只需运行 `./publish-post.sh` 或 `./deploy.sh` 即可自动完成部署。

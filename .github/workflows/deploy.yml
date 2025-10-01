@@ -6,8 +6,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  detect-changes:
     runs-on: ubuntu-latest
+    outputs:
+      has-posts: ${{ steps.changes.outputs.posts }}
+      has-app-changes: ${{ steps.changes.outputs.app }}
+      has-config-changes: ${{ steps.changes.outputs.config }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Detect changes
+      uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        filters: |
+          posts:
+            - 'posts/**'
+          app:
+            - 'app/**'
+            - 'components/**'
+            - 'lib/**'
+          config:
+            - 'package.json'
+            - 'next.config.mjs'
+            - 'tailwind.config.js'
+            - 'tsconfig.json'
+
+  deploy:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    if: needs.detect-changes.outputs.has-posts == 'true' || needs.detect-changes.outputs.has-app-changes == 'true' || needs.detect-changes.outputs.has-config-changes == 'true'
     
     steps:
     - uses: actions/checkout@v4
@@ -32,7 +62,17 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd /home/ecs-user/baitengfei
-          git pull origin main
-          npm ci
-          npm run build
-          pm2 restart baitengfei || pm2 start npm --name "baitengfei" -- start
+          
+          # 确保部署脚本有执行权限
+          chmod +x server-deploy.sh
+          
+          # 执行智能部署
+          ./server-deploy.sh
+          
+          # 显示部署结果
+          echo "📊 部署完成，应用状态："
+          pm2 status baitengfei
+          
+          # 显示最近的日志
+          echo "📝 最近的应用日志："
+          pm2 logs baitengfei --lines 10 --nostream
