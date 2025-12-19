@@ -23,7 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   rel="noopener noreferrer" 
                   className="text-xs text-gray-600"
                 >
-                  京ICP备2024052148号-4
+                  京ICP备2025156648号-1
                 </a>
                 <Image 
                   src="/备案图标.png" 
