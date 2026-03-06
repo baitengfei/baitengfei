@@ -6,86 +6,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  detect-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      has-posts: ${{ steps.changes.outputs.posts }}
-      has-app-changes: ${{ steps.changes.outputs.app }}
-      has-config-changes: ${{ steps.changes.outputs.config }}
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    
-    - name: Detect changes
-      uses: dorny/paths-filter@v2
-      id: changes
-      with:
-        filters: |
-          posts:
-            - 'posts/**'
-          app:
-            - 'app/**'
-            - 'components/**'
-            - 'lib/**'
-          config:
-            - 'package.json'
-            - 'next.config.mjs'
-            - 'tailwind.config.js'
-            - 'tsconfig.json'
-            - '.github/workflows/**'
-            - 'server-deploy.sh'
-
   deploy:
-    needs: detect-changes
     runs-on: ubuntu-latest
-    if: needs.detect-changes.outputs.has-posts == 'true' || needs.detect-changes.outputs.has-app-changes == 'true' || needs.detect-changes.outputs.has-config-changes == 'true'
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Build
-      run: npm run build
-
-    - name: Upload files to server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        source: ".next,package.json,package-lock.json,next.config.mjs,public,posts,server-deploy.sh,node_modules"
-        target: "/home/ubuntu/baitengfei"
-        strip_components: 0
-        overwrite: true
-
-    - name: Deploy to server
+    - name: Deploy via SSH
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
+        timeout: 120s
+        command_timeout: 10m
         script: |
+          set -e
+
+          # 初始化仓库（首次部署）
+          if [ ! -d "/home/ubuntu/baitengfei/.git" ]; then
+            git clone https://github.com/baitengfei/baitengfei.git /home/ubuntu/baitengfei
+          fi
+
           cd /home/ubuntu/baitengfei
 
-          # 确保部署脚本有执行权限
-          chmod +x server-deploy.sh
+          # 拉取最新代码
+          git pull origin main
 
-          # 执行智能部署
-          ./server-deploy.sh
+          # 安装依赖
+          npm ci --production=false
 
-          # 显示部署结果
-          echo "📊 部署完成，应用状态："
-          ~/.npm-global/bin/pm2 status baitengfei || npx pm2 status baitengfei
+          # 构建
+          npm run build
 
-          # 显示最近的日志
-          echo "📝 最近的应用日志："
-          ~/.npm-global/bin/pm2 logs baitengfei --lines 10 --nostream || npx pm2 logs baitengfei --lines 10 --nostream
+          # 启动或重启 PM2
+          if pm2 describe baitengfei > /dev/null 2>&1; then
+            pm2 restart baitengfei
+          else
+            pm2 start npm --name "baitengfei" -- start
+            pm2 save
+          fi
+
+          echo "✅ 部署完成"
+          pm2 status baitengfei
