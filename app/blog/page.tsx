@@ -2,6 +2,28 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import BlogPosts from "./BlogPosts"; // 引入新的客户端组件
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "博客",
+  description: "白腾飞的博客，分享 AI、机器人、智能家居等科技领域的前沿观察和产品使用体验。",
+  alternates: {
+    canonical: "https://baitengfei.com/blog",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://baitengfei.com/blog",
+    title: "博客 | 白腾飞",
+    description: "白腾飞的博客，分享 AI、机器人、智能家居等科技领域的前沿观察和产品使用体验。",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "白腾飞博客" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "博客 | 白腾飞",
+    description: "白腾飞的博客，分享 AI、机器人、智能家居等科技领域的前沿观察和产品使用体验。",
+    images: ["/og-image.png"],
+  },
+};
 
 interface Post {
   slug: string;

@@ -1,5 +1,25 @@
 // app/ai-applications/page.tsx
 import Breadcrumb from "../components/Breadcrumb";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AI 应用",
+  description: "白腾飞使用过的好用 AI 软件案例分享，包括 AI 写作、AI 克隆声音等实用工具。",
+  alternates: { canonical: "https://baitengfei.com/ai-applications" },
+  openGraph: {
+    type: "website",
+    url: "https://baitengfei.com/ai-applications",
+    title: "AI 应用 | 白腾飞",
+    description: "白腾飞使用过的好用 AI 软件案例分享，包括 AI 写作、AI 克隆声音等实用工具。",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI 应用" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI 应用 | 白腾飞",
+    description: "白腾飞使用过的好用 AI 软件案例分享，包括 AI 写作、AI 克隆声音等实用工具。",
+    images: ["/og-image.png"],
+  },
+};
 
 const AIApplicationsPage = () => {
     return (

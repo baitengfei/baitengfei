@@ -1,4 +1,25 @@
-// app/page.tsx
+// app/about/page.tsx
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "关于",
+  description: "白腾飞，AI 时代的独立开发者和产品经理，专注于 AI、机器人、智能家居领域。「宝宝时刻」和「逃脱智能的房子」开发者。",
+  alternates: { canonical: "https://baitengfei.com/about" },
+  openGraph: {
+    type: "profile",
+    url: "https://baitengfei.com/about",
+    title: "关于 | 白腾飞",
+    description: "白腾飞，AI 时代的独立开发者和产品经理，专注于 AI、机器人、智能家居领域。",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "白腾飞" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "关于 | 白腾飞",
+    description: "白腾飞，AI 时代的独立开发者和产品经理，专注于 AI、机器人、智能家居领域。",
+    images: ["/og-image.png"],
+  },
+};
+
 const HomePage = () => {
     return (
       <main>
