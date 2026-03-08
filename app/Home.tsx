@@ -1,6 +1,4 @@
-// app/Home.tsx
-"use client"; // 指定这是一个客户端组件
-
+// app/Home.tsx - 改为服务端组件
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -75,6 +73,7 @@ export default function Home() {
             alt="白腾飞"
             width={125}
             height={125}
+            priority
             className="object-cover flex-shrink-0 rounded-md md:mt-4 mx-auto md:mx-0"
           />
           <div className="space-y-4 text-sm md:text-base">
