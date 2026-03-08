@@ -30,12 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
-    {
-      url: `${baseUrl}/about/`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.6,
-    },
+
   ]
 
   // 动态博客文章页面
