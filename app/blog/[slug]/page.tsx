@@ -80,7 +80,7 @@ export default async function PostPage({ params }: PostProps) {
   const { data, content } = post;
 
   // 将 Markdown 转换为 HTML
-  const processedContent = await remark().use(html).process(content);
+  const processedContent = await remark().use(html, { allowDangerousHtml: true }).process(content);
   const contentHtml = processedContent.toString();
 
   return (

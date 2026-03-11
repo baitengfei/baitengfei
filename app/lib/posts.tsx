@@ -54,7 +54,7 @@ export async function getPostData(slug: string): Promise<PostData> {
   const matterResult = matter(fileContents);
 
   // 使用 remark 将 markdown 转换为 HTML
-  const processedContent = await remark().use(html).process(matterResult.content);
+  const processedContent = await remark().use(html, { allowDangerousHtml: true }).process(matterResult.content);
   const contentHtml = processedContent.toString();
 
   // 返回包含 HTML 内容的完整文章数据
