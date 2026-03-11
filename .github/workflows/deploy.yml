@@ -24,16 +24,21 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Upload build to server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        source: ".next,posts,public,package.json,next.config.mjs"
-        target: "/root/baitengfei"
-        overwrite: true
-        timeout: 60s
+    - name: Setup SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+        ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+    - name: Rsync to server
+      run: |
+        SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+        TARGET="${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/baitengfei"
+        rsync -az --delete -e "$SSH" .next/   $TARGET/.next/
+        rsync -az --delete -e "$SSH" posts/   $TARGET/posts/
+        rsync -az --delete -e "$SSH" public/  $TARGET/public/
+        rsync -az           -e "$SSH" package.json next.config.mjs $TARGET/
 
     - name: Restart PM2
       uses: appleboy/ssh-action@v1.0.3
@@ -46,7 +51,7 @@ jobs:
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
           nvm use 18
-          cd /root/baitengfei
+          cd ~/baitengfei
           npm ci --omit=dev
           pm2 restart baitengfei || pm2 start npm --name "baitengfei" -- start
           pm2 save
