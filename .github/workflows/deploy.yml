@@ -41,8 +41,11 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
-        timeout: 30s
+        timeout: 60s
         script: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm use 18
           cd /root/baitengfei
           npm ci --omit=dev
           pm2 restart baitengfei || pm2 start npm --name "baitengfei" -- start
