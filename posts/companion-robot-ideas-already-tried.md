@@ -3,22 +3,13 @@ title: 当你想做陪伴机器人，却发现想到的点都被人试过了
 slug: companion-robot-ideas-already-tried
 excerpt: 随着大语言模型的出现以及快速发展，人们又开始将目标瞄准虚拟陪伴领域。其实早在人工智能还没那么发达的年代，我们就一直在探索类似的方案了。从「电子鸡」、索尼机器狗到 Jibo、Cozmo，它们都是风靡一时的经典产品，对于当下的我们有很多值得借鉴和参考的经验。
 date: "2024-10-12"
+bilibili: "BV1S828YoEBe"
 tags:
     - robot
     - AI
 ---
 
 剪了一个视频来回顾一下这些产品，视频下方是文字稿——
-
-<div style="position:relative;width:100%;padding-bottom:56.25%;margin:1.5rem 0;">
-  <iframe
-    src="//player.bilibili.com/player.html?bvid=BV1S828YoEBe&high_quality=1&danmaku=0"
-    scrolling="no"
-    frameborder="0"
-    allowfullscreen="true"
-    style="position:absolute;top:0;left:0;width:100%;height:100%;">
-  </iframe>
-</div>
 
 科幻作品里对未来的描述总能给人很多憧憬和启发，很多创新产品都能在其中找到一些关联。
 

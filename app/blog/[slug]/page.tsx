@@ -95,6 +95,16 @@ export default async function PostPage({ params }: PostProps) {
           <span className="inline-block w-4 h-4 bg-black rounded-full mr-2"></span>
           {data.date}
         </p>
+        {data.bilibili && (
+          <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%", margin: "1.5rem 0" }}>
+            <iframe
+              src={`//player.bilibili.com/player.html?bvid=${data.bilibili}&high_quality=1&danmaku=0`}
+              frameBorder={0}
+              allowFullScreen
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+            />
+          </div>
+        )}
         <div className="mt-4" dangerouslySetInnerHTML={{ __html: contentHtml }} />
       </article>
     </div>
