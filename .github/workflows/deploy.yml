@@ -16,10 +16,9 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
 
     - name: Build
       run: npm run build
@@ -52,7 +51,7 @@ jobs:
           source "$NVM_DIR/nvm.sh"
           nvm use 18
           cd ~/baitengfei
-          npm ci --omit=dev
+          npm install --omit=dev
           pm2 restart baitengfei || pm2 start npm --name "baitengfei" -- start
           pm2 save
           echo "✅ 部署完成"
