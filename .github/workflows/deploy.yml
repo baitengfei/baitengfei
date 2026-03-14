@@ -12,17 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build
-      run: npm run build
-
     - name: Setup SSH key
       run: |
         mkdir -p ~/.ssh
@@ -30,28 +19,30 @@ jobs:
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-    - name: Rsync to server
+    - name: Sync source to server
       run: |
         SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
         TARGET="${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/baitengfei"
-        rsync -az --delete -e "$SSH" .next/   $TARGET/.next/
-        rsync -az --delete -e "$SSH" posts/   $TARGET/posts/
-        rsync -az --delete -e "$SSH" public/  $TARGET/public/
-        rsync -az           -e "$SSH" package.json next.config.mjs $TARGET/
+        rsync -az --delete \
+          --exclude='.git' \
+          --exclude='node_modules' \
+          --exclude='.next' \
+          -e "$SSH" ./ "$TARGET/"
 
-    - name: Restart PM2
+    - name: Build and restart on server
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
-        timeout: 60s
+        timeout: 300s
         script: |
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
           nvm use 18
           cd ~/baitengfei
           npm install --omit=dev
+          npm run build
           pm2 restart baitengfei || pm2 start npm --name "baitengfei" -- start
           pm2 save
           echo "✅ 部署完成"
